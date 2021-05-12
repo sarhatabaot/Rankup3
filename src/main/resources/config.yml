@@ -44,7 +44,7 @@ notify-update: true
 #   if true, players will be checked for the permission rankup.rank.RANK, where RANK
 # is the rankup in rankups.yml.
 # true also enables MANUAL MODE: Nothing will automatically change on rankup.
-# You must use commands to change a player's group or permission when true.
+# You must use 'commands:' to change a player's group or permission when true. https://github.com/okx-code/Rankup3/wiki/How-to-rankups.yml-and-prestiges.yml#1-commands
 permission-rankup: false
 
 # how people should confirm ranking up

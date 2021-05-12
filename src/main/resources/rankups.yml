@@ -2,12 +2,13 @@
 # If you are adding your own ranks, make sure to delete the example ranks!
 # Need help setting the plugin up?
 # Read an example: https://github.com/okx-code/Rankup3/wiki/Configuration-Example
+# What you'll need to know: https://github.com/okx-code/Rankup3/wiki/How-to-rankups.yml-and-prestiges.yml#how-to-rankups
 # Join the discord server for live support: https://discord.gg/maB4382 (buyers only)
 #
 
-ExampleA: # This name doesn't matter, it can be anything you want!
-  rank: 'A' # This is the rank where you start from. Use the displayname if you have it!
-  next: 'B' # This is the rank where you go next. Read it as "From A to B"
+ExampleA: # This name won't show in-game. It can be anything you want but it must be unique.
+  rank: 'A' # This is the rank where you start from. Use the <name> part from "displayname.<name>" if you use displaynames!
+  next: 'B' # This is the rank where you're moved to. Read it as "From A to B".
   requirements:  # Here go your requirements. You can have as many as you want.
 # List of requirements: https://github.com/okx-code/Rankup3/wiki/List-of-Requirements
     - 'money 5000'
@@ -31,6 +32,7 @@ ExampleC:
     - 'total-mob-kills 15'
   rankup: # Introduction to placeholders and multi-line messages!
     requirements-not-met: |- # These 2 characters indicate to Rankup that it's a multi-line message.
+# FAQ for multi-line messages: https://github.com/okx-code/Rankup3/wiki/FAQ#how-do-i-write-multi-line-messages
 # List of placeholders: https://github.com/okx-code/Rankup3/wiki/Config-Placeholders
       &3You need:
       &c- &d&n${AMOUNT money}

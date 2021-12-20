@@ -60,7 +60,6 @@ import sh.okx.rankup.prestige.Prestiges;
 import sh.okx.rankup.ranks.Rank;
 import sh.okx.rankup.ranks.RankList;
 import sh.okx.rankup.ranks.Rankups;
-import sh.okx.rankup.ranksgui.OldRanksGuiCommand;
 import sh.okx.rankup.ranksgui.RanksGuiCommand;
 import sh.okx.rankup.ranksgui.RanksGuiListener;
 import sh.okx.rankup.requirements.Requirement;

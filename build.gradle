@@ -1,7 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
-    id 'java'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id "io.freefair.lombok" version "6.0.0-m2"
+    id 'java-library'
+    id 'com.github.johnrengelman.shadow' version '7.1.1'
+    id "io.freefair.lombok" version "6.3.0"
     id "maven-publish"
 }
 
@@ -93,7 +95,7 @@ processResources {
     }
 }
 
-task spigot(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+task spigot(type: ShadowJar) {
     from sourceSets.main.runtimeClasspath
     destinationDirectory = file("./spigot/plugins/")
     archiveFileName = "Rankup.jar"

@@ -54,12 +54,10 @@ public class PlaceholderRequirement extends ProgressiveRequirement {
   public double getTotal(Player player) {
     String[] parts = getParts(player);
 
-    switch (parts[1]) {
-      case ">=":
-        return Double.parseDouble(parts[2]);
-      default:
-        return 1;
+    if (">=".equals(parts[1])) {
+      return Double.parseDouble(parts[2]);
     }
+    return 1;
   }
 
   private String[] getParts(Player player) {

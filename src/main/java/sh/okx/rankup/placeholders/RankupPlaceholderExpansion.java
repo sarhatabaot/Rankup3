@@ -3,6 +3,7 @@ package sh.okx.rankup.placeholders;
 import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import sh.okx.rankup.RankupPlugin;
 
 @RequiredArgsConstructor
@@ -11,22 +12,22 @@ public class RankupPlaceholderExpansion extends PlaceholderExpansion {
   private final RankupExpansion expansion;
 
   @Override
-  public String onPlaceholderRequest(Player player, String params) {
+  public String onPlaceholderRequest(Player player, @NotNull String params) {
     return expansion.placeholder(player, params);
   }
 
   @Override
-  public String getIdentifier() {
+  public @NotNull String getIdentifier() {
     return "rankup";
   }
 
   @Override
-  public String getAuthor() {
+  public @NotNull String getAuthor() {
     return String.join(", ", plugin.getDescription().getAuthors());
   }
 
   @Override
-  public String getVersion() {
+  public @NotNull String getVersion() {
     return plugin.getDescription().getVersion();
   }
 

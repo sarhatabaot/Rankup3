@@ -204,7 +204,7 @@ public class InfoCommand extends BaseCommand {
     @Subcommand("playtime")
     @CommandPermission("rankup.playtime")
     @Description("View your playtime.")
-    public class PlayTimeCommand extends BaseCommand {
+    public static class PlayTimeCommand extends BaseCommand {
         private Statistic playOneTick = Statistic.PLAY_ONE_MINUTE;
 
         public PlayTimeCommand() {

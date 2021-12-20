@@ -17,14 +17,13 @@ public class GuiListener implements Listener {
   public void on(InventoryClickEvent e) {
     Inventory inventory = e.getInventory();
     if (inventory == null
-        || !(inventory.getHolder() instanceof Gui)
+        || !(inventory.getHolder() instanceof Gui gui)
         || !inventory.equals(e.getClickedInventory())) {
       return;
     }
     e.setCancelled(true);
 
     Player player = (Player) e.getWhoClicked();
-    Gui gui = (Gui) inventory.getHolder();
 
     if (gui.getRankup().isSimilar(e.getCurrentItem())) {
       Bukkit.getScheduler().runTask(plugin, player::closeInventory);

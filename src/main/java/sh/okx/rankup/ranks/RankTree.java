@@ -30,8 +30,9 @@ public class RankTree<T extends Rank> implements Iterable<T> {
   @NotNull
   @Override
   public Iterator<T> iterator() {
-    return new Iterator<T>() {
+    return new Iterator<>() {
       private RankElement<T> element = first;
+
       @Override
       public boolean hasNext() {
         return element != null;

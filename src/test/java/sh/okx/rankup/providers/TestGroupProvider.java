@@ -4,10 +4,11 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import java.util.UUID;
+
 import sh.okx.rankup.hook.GroupProvider;
 
 public class TestGroupProvider implements GroupProvider {
-    private Multimap<UUID, String> groups = ArrayListMultimap.create();
+    private final Multimap<UUID, String> groups = ArrayListMultimap.create();
 
     @Override
     public boolean inGroup(UUID uuid, String group) {

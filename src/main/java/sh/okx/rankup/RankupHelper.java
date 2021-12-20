@@ -184,11 +184,7 @@ public class RankupHelper {
             .send(player);
       }
       return false;
-    } else if (message && checkCooldown(player, rank)) {
-      return false;
-    }
-
-    return true;
+    } else return !message || !checkCooldown(player, rank);
   }
 
   public void prestige(Player player) {
@@ -234,10 +230,6 @@ public class RankupHelper {
           .replaceRank(prestigeElement.getNext().getRank())
           .send(player);
       return false;
-    } else if (checkCooldown(player, prestigeElement.getRank())) {
-      return false;
-    }
-
-    return true;
+    } else return !checkCooldown(player, prestigeElement.getRank());
   }
 }

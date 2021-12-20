@@ -54,10 +54,10 @@ public abstract class RankupTest {
             if (this.testResourceFolder != null) {
                 Path testPath = this.testResourceFolder.toPath();
                 Path pluginPath = plugin.getDataFolder().toPath();
-                Files.walkFileTree(testPath, new SimpleFileVisitor<Path>() {
+                Files.walkFileTree(testPath, new SimpleFileVisitor<>() {
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                        throws IOException {
+                            throws IOException {
                         Path out = pluginPath.resolve(testPath.relativize(file));
                         System.out.println("Copy " + file + " to " + out);
                         out.getParent().toFile().mkdirs();

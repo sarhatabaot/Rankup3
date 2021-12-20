@@ -131,7 +131,7 @@ public class RanksGui {
         return new GuiItem(nbtItem.getItem(), x, row);
     }
 
-    private class GuiItem {
+    private static class GuiItem {
         private final ItemStack itemStack;
         private final int x;
         private final int row;
@@ -200,7 +200,4 @@ public class RanksGui {
         }
     }
 
-    public void close() {
-
-    }
 }

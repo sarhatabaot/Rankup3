@@ -58,8 +58,7 @@ public class PebbleTextProcessor implements TextProcessor {
         return writer.toString();
       } catch (RuntimeException ex) {
         if (ex.getCause() instanceof InvocationTargetException) {
-          if (ex.getCause().getCause() instanceof InvalidRequirementException) {
-            InvalidRequirementException cause = (InvalidRequirementException) ex.getCause().getCause();
+          if (ex.getCause().getCause() instanceof InvalidRequirementException cause) {
             Logger logger = JavaPlugin.getPlugin(RankupPlugin.class).getLogger();
             logger.severe("Unknown requirement \"" + cause.getRequirement() + "\" on rank \"" + cause.getRank().getRank() + "\" in message:");
             for (String line : string.split("\n")) {

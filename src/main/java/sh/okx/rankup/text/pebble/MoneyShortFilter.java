@@ -27,12 +27,11 @@ public class MoneyShortFilter implements Filter {
     if (input == null) {
       return null;
     }
-    if (!(input instanceof Number)) {
+    if (!(input instanceof Number number)) {
       throw new PebbleException(null, "The input for the 'MoneyShortFilter' filter has to be a number: " + input,
           lineNumber, self.getName());
     }
 
-    Number number = (Number) input;
     return placeholders.formatMoney(number.doubleValue());
   }
 }

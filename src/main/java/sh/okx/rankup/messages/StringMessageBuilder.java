@@ -84,8 +84,7 @@ public class StringMessageBuilder implements MessageBuilder {
 
   @Override
   public MessageBuilder replaceOldRank(Rank rank) {
-    if (rank instanceof Prestige) {
-      Prestige prestige = (Prestige) rank;
+    if (rank instanceof Prestige prestige) {
       replace(Variable.FROM, prestige.getFrom());
       replace(Variable.TO, prestige.getTo());
     }

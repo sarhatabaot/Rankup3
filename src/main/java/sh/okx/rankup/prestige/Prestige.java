@@ -76,12 +76,7 @@ public class Prestige extends Rank {
     }
 
     // subsequent prestiges
-    boolean inRank = plugin.getPermissions().inGroup(player.getUniqueId(), rank);
-    if (inRank) {
-      return true;
-    }
-
-    return false;
+    return plugin.getPermissions().inGroup(player.getUniqueId(), rank);
   }
 
   public boolean isEligible(Player player) {

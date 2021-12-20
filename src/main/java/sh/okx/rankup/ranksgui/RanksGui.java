@@ -52,7 +52,7 @@ public class RanksGui {
         int rowIndex = offset + width;
         RankElement<Rank> rankElement = plugin.getRankups().getTree().getFirst();
         boolean complete = playerRankElement != null;
-        while(rankElement.hasNext()) {
+        while (rankElement.hasNext()) {
             ConfigurationSection rankPath = plugin.getSection(rankElement.getRank(), "rankup.ranksgui");
 
             String path;
@@ -82,7 +82,7 @@ public class RanksGui {
 
         GuiItem infoItem = getItem("info");
         final int infoItemIndex = infoItem.getRow() * 9 + infoItem.getX();
-        inventory.setItem(infoItemIndex,infoItem.getItemStack());
+        inventory.setItem(infoItemIndex, infoItem.getItemStack());
 
         if (fill != null) {
             for (int i = 0; i < rows * 9; i++) {
@@ -98,10 +98,10 @@ public class RanksGui {
 
     private ItemStack getItemStackFromConfig(final ConfigurationSection section) {
         final String materialString = section.getString("material");
-        if(materialString.startsWith("hdb")) {
+        if (materialString.startsWith("hdb")) {
             String hdbId = materialString.split(":")[1];
             final ItemStack head = plugin.getHeadDatabaseAPI().getItemHead(hdbId);
-            if(head == null)
+            if (head == null)
                 return new ItemStack(Material.AIR);
             return head;
         }
@@ -124,7 +124,7 @@ public class RanksGui {
         meta.setLore(lore);
         item.setItemMeta(meta);
 
-        return new GuiItem(item,x,row);
+        return new GuiItem(item, x, row);
     }
 
     private class GuiItem {
@@ -150,6 +150,7 @@ public class RanksGui {
             return row;
         }
     }
+
     private <T> T get(BiFunction<ConfigurationSection, String, T> function, String path, ConfigurationSection primary, ConfigurationSection secondary, T def) {
         T get = null;
         if (primary != null) {

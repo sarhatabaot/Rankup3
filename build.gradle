@@ -116,6 +116,11 @@ test {
     }
 }
 
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
 
 publishing {
     publications {

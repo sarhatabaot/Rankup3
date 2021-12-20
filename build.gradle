@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'sh.okx'
-version '3.13.1'
+version '3.13.2'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_16
@@ -65,6 +65,7 @@ dependencies {
         exclude group: 'org.slf4j'
     }
     implementation 'com.electronwill.night-config:toml:3.6.4'
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
 }
 
 artifacts {
@@ -75,6 +76,7 @@ shadowJar {
     archiveClassifier.set('')
     minimize()
     relocate 'org.slf4j', 'sh.okx.rankup.export.org.slf4j'
+    relocate 'org.bstats', 'sh.okx.rankup.metrics'
 }
 
 // automatically copy the version to plugin.yml

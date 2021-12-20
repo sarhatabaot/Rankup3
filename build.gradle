@@ -9,8 +9,8 @@ group 'sh.okx'
 version '3.13.1'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
 
 repositories {
@@ -43,12 +43,14 @@ dependencies {
         transitive = false
     }
 
-    compileOnly('com.github.MilkBowl:VaultAPI:1.7') {
+    compileOnly('com.github.MilkBowl:VaultAPI:1.7.1') {
         exclude group: 'org.bukkit'
     }
-    compileOnly ('me.clip:placeholderapi:2.10.9') {
+    compileOnly ('me.clip:placeholderapi:2.10.10') {
         exclude group: 'org.bstats'
     }
+    compileOnly 'com.arcaniax:HeadDatabase-API:1.3.1'
+
     compileOnly 'com.github.pyvesb:advanced-achievements:6.7.2'
     compileOnly 'com.github.astei:Superbvote:700fca43659b438cb9bb36c218a7646d2f2ef315'
     compileOnly('com.github.mcMMO-Dev:mcMMO:601297') {

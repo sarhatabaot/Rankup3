@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import lombok.Setter;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +32,7 @@ import sh.okx.rankup.commands.RankupCommand;
 import sh.okx.rankup.economy.Economy;
 import sh.okx.rankup.economy.EconomyProvider;
 import sh.okx.rankup.economy.VaultEconomyProvider;
+import sh.okx.rankup.events.HeadDatabaseLoadEvent;
 import sh.okx.rankup.events.RankupRegisterEvent;
 import sh.okx.rankup.gui.Gui;
 import sh.okx.rankup.gui.GuiListener;
@@ -114,6 +117,10 @@ public class RankupPlugin extends JavaPlugin {
   private Placeholders placeholders;
   @Getter
   private RankupHelper helper;
+
+  @Getter @Setter
+  private HeadDatabaseAPI headDatabaseAPI;
+
   protected AutoRankup autoRankup = new AutoRankup(this);
   private String errorMessage;
   private PermissionManager permissionManager = new VaultPermissionManager(this);
@@ -182,8 +189,16 @@ public class RankupPlugin extends JavaPlugin {
 
     placeholders = new Placeholders(this);
     placeholders.register();
+
+    loadHeadDatabase();
   }
 
+  private void loadHeadDatabase() {
+    if (this.getServer().getPluginManager().getPlugin("HeadDatabase") != null) {
+      getLogger().info("Found HeadDatabase. You can now use heads in the gui.");
+      getServer().getPluginManager().registerEvents(new HeadDatabaseLoadEvent(this), this);
+    }
+  }
 
   @Override
   public void onDisable() {

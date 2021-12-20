@@ -10,6 +10,9 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.AdvancedPie;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -143,10 +146,10 @@ public class RankupPlugin extends JavaPlugin {
     reload(true);
 
     if (System.getProperty("RANKUP_TEST") == null) {
-      Metrics metrics = new Metrics(this);
-      metrics.addCustomChart(new Metrics.SimplePie("confirmation",
+      Metrics metrics = new Metrics(this, 108);
+      metrics.addCustomChart(new SimplePie("confirmation",
               () -> config.getString("confirmation-type", "unknown")));
-      metrics.addCustomChart(new Metrics.AdvancedPie("requirements", () -> {
+      metrics.addCustomChart(new AdvancedPie("requirements", () -> {
         Map<String, Integer> map = new HashMap<>();
         addAllRequirements(map, rankups);
         if (prestiges != null) {
@@ -154,11 +157,11 @@ public class RankupPlugin extends JavaPlugin {
         }
         return map;
       }));
-      metrics.addCustomChart(new Metrics.SimplePie("prestige",
+      metrics.addCustomChart(new SimplePie("prestige",
               () -> config.getBoolean("prestige") ? "enabled" : "disabled"));
-      metrics.addCustomChart(new Metrics.SimplePie("permission-rankup",
+      metrics.addCustomChart(new SimplePie("permission-rankup",
               () -> config.getBoolean("permission-rankup") ? "enabled" : "disabled"));
-      metrics.addCustomChart(new Metrics.SimplePie("notify-update",
+      metrics.addCustomChart(new SimplePie("notify-update",
               () -> config.getBoolean("notify-update") ? "enabled" : "disabled"));
     }
 

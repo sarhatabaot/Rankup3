@@ -5,6 +5,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
@@ -45,6 +46,7 @@ public class InfoCommand extends BaseCommand {
     }
     @Subcommand("reload")
     @CommandPermission("rankup.reload")
+    @Description("Reloads configuration files.")
     public void onReload(final CommandSender sender) {
         plugin.reload(false);
         if (!plugin.error(sender)) {
@@ -54,6 +56,7 @@ public class InfoCommand extends BaseCommand {
 
     @Subcommand("forcerankup")
     @CommandPermission("rankup.force")
+    @Description("Force a player to prestige, bypassing requirements.")
     public void onForceRankup(final CommandSender sender, final Player player) {
         Rankups rankups = plugin.getRankups();
         RankElement<Rank> rankElement = rankups.getByPlayer(player);
@@ -109,6 +112,7 @@ public class InfoCommand extends BaseCommand {
 
     @Subcommand("rankdown")
     @CommandPermission("rankup.force")
+    @Description("Force a player to move down one rank.")
     public void onRankDown(final CommandSender sender, final Player player) {
         RankElement<Rank> currentRankElement = plugin.getRankups().getByPlayer(player);
         if (currentRankElement == null) {
@@ -199,6 +203,7 @@ public class InfoCommand extends BaseCommand {
 
     @Subcommand("playtime")
     @CommandPermission("rankup.playtime")
+    @Description("View your playtime.")
     public class PlayTimeCommand extends BaseCommand {
         private Statistic playOneTick = Statistic.PLAY_ONE_MINUTE;
 
@@ -211,7 +216,6 @@ public class InfoCommand extends BaseCommand {
             }
         }
 
-        //todo not sure if needed
         @HelpCommand
         public void onHelp(CommandHelp help) {
             help.showHelp();
@@ -219,6 +223,7 @@ public class InfoCommand extends BaseCommand {
 
         @Subcommand("add")
         @CommandPermission("rankup.playtime.add")
+        @Description("Increase the playtime statistic for a player")
         public void onAdd(CommandSender sender, Player player, final int minutes){
             int oldMinutes = player.getStatistic(playOneTick) / 20 / 60;
             if (minutes > 0) {
@@ -236,6 +241,7 @@ public class InfoCommand extends BaseCommand {
 
         @Subcommand("set")
         @CommandPermission("rankup.playtime.set")
+        @Description("Update the playtime statistic for a player")
         public void onSet(CommandSender sender, Player player, int minutes){
             player.setStatistic(playOneTick, minutes * 20 * 60);
             sender.sendMessage(ChatColor.LIGHT_PURPLE + "Updated playtime for " + player.getName() + " to " + minutes + " minutes");
@@ -243,6 +249,7 @@ public class InfoCommand extends BaseCommand {
 
         @Subcommand("get")
         @CommandPermission("rankup.playtime.get")
+        @Description("Get amount of minutes played.")
         public void onGet(CommandSender sender, @Optional Player player) {
             if(player == null && sender instanceof Player senderPlayer) {
                 int ticks = senderPlayer.getStatistic(playOneTick);

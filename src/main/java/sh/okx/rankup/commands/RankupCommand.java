@@ -3,6 +3,8 @@ package sh.okx.rankup.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Private;
+import co.aikar.commands.annotation.Subcommand;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -72,5 +74,18 @@ public class RankupCommand extends BaseCommand {
             case "none" -> plugin.getHelper().rankup(player);
             default -> throw new IllegalArgumentException("Invalid confirmation type " + confirmationType);
         }
+    }
+
+    @Private
+    @Subcommand("gui")
+    public void onRankupGui(Player player) {
+        Rankups rankups = plugin.getRankups();
+        RankElement<Rank> rankElement = rankups.getByPlayer(player);
+        Gui gui = Gui.of(player, rankElement.getRank(), rankElement.getNext().getRank(), plugin, true);
+        if (gui == null) {
+            player.sendMessage(ChatColor.RED + "GUI is not available. Check console for more information.");
+            return;
+        }
+        gui.open(player);
     }
 }

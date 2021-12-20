@@ -1,5 +1,6 @@
 package sh.okx.rankup.ranksgui;
 
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -115,16 +116,19 @@ public class RanksGui {
 
         final int x = section.getInt("x");
         final int row = section.getInt("row");
-        final String name = section.getString("name");
-        final List<String> lore = section.getStringList("lore");
+        final List<String> commands = section.getStringList("commands");
+        final String name = Colour.translate(section.getString("name"));
 
         final ItemStack item = getItemStackFromConfig(section).clone();
         final ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
-        meta.setLore(lore);
         item.setItemMeta(meta);
+        NBTItem nbtItem = new NBTItem(item);
+        if(!commands.isEmpty())
+            nbtItem.setBoolean("command",true);
 
-        return new GuiItem(item, x, row);
+        nbtItem.setObject("commands",commands);
+        return new GuiItem(nbtItem.getItem(), x, row);
     }
 
     private class GuiItem {
@@ -149,6 +153,8 @@ public class RanksGui {
         public int getRow() {
             return row;
         }
+
+
     }
 
     private <T> T get(BiFunction<ConfigurationSection, String, T> function, String path, ConfigurationSection primary, ConfigurationSection secondary, T def) {
@@ -179,7 +185,19 @@ public class RanksGui {
                 Bukkit.dispatchCommand(player, "rankup gui");
             });
         }
-        //add check for info
+        NBTItem nbtItem = new NBTItem(event.getCurrentItem());
+        if(nbtItem.getBoolean("command")) {
+            final List<String> commands = (List<String>) nbtItem.getObject("commands",List.class);
+            for(String command: commands) {
+                final String replacedCommand = command.replace("%player%",((Player) event.getWhoClicked()).getPlayer().getName());
+                if(command.startsWith("msg:")) {
+                    final String message = command.split("msg:")[1];
+                    player.sendMessage(Colour.translate(message));
+                } else {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), replacedCommand);
+                }
+            }
+        }
     }
 
     public void close() {

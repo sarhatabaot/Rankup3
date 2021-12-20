@@ -1,26 +1,26 @@
 package sh.okx.rankup.ranksgui;
 
-import lombok.RequiredArgsConstructor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import sh.okx.rankup.RankupPlugin;
 
-@RequiredArgsConstructor
-public class RanksGuiCommand implements CommandExecutor {
+/**
+ * @author sarhatabaot
+ */
+@CommandAlias("ranks|ranksgui")
+public class RanksGuiCommand extends BaseCommand {
     private final RankupPlugin plugin;
     private final RanksGuiListener listener;
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
-            return false;
-        }
-        Player player = (Player) sender;
+    public RanksGuiCommand(final RankupPlugin plugin, final RanksGuiListener listener) {
+        this.plugin = plugin;
+        this.listener = listener;
+    }
 
+    @Default
+    public void onGui(final Player player) {
         listener.open(new RanksGui(plugin, player));
-        return true;
     }
 }

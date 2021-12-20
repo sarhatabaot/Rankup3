@@ -1,5 +1,6 @@
 package sh.okx.rankup;
 
+import co.aikar.commands.PaperCommandManager;
 import com.electronwill.nightconfig.toml.TomlFormat;
 
 import java.io.File;
@@ -34,6 +35,12 @@ import sh.okx.rankup.commands.PrestigeCommand;
 import sh.okx.rankup.commands.PrestigesCommand;
 import sh.okx.rankup.commands.RanksCommand;
 import sh.okx.rankup.commands.RankupCommand;
+import sh.okx.rankup.commands.old.OldInfoCommand;
+import sh.okx.rankup.commands.old.OldMaxRankupCommand;
+import sh.okx.rankup.commands.old.OldPrestigeCommand;
+import sh.okx.rankup.commands.old.OldPrestigesCommand;
+import sh.okx.rankup.commands.old.OldRanksCommand;
+import sh.okx.rankup.commands.old.OldRankupCommand;
 import sh.okx.rankup.economy.Economy;
 import sh.okx.rankup.economy.EconomyProvider;
 import sh.okx.rankup.economy.VaultEconomyProvider;
@@ -53,6 +60,7 @@ import sh.okx.rankup.prestige.Prestiges;
 import sh.okx.rankup.ranks.Rank;
 import sh.okx.rankup.ranks.RankList;
 import sh.okx.rankup.ranks.Rankups;
+import sh.okx.rankup.ranksgui.OldRanksGuiCommand;
 import sh.okx.rankup.ranksgui.RanksGuiCommand;
 import sh.okx.rankup.ranksgui.RanksGuiListener;
 import sh.okx.rankup.requirements.Requirement;
@@ -168,27 +176,7 @@ public class RankupPlugin extends JavaPlugin {
                     () -> config.getBoolean("notify-update") ? "enabled" : "disabled"));
         }
 
-        if (config.getBoolean("ranks")) {
-            if (config.getBoolean("ranks-gui")) {
-                RanksGuiListener listener = new RanksGuiListener();
-                getCommand("ranks").setExecutor(new RanksGuiCommand(this, listener));
-                getServer().getPluginManager().registerEvents(listener, this);
-            } else {
-                getCommand("ranks").setExecutor(new RanksCommand(this));
-            }
-        }
-        if (config.getBoolean("prestige")) {
-            getCommand("prestige").setExecutor(new PrestigeCommand(this));
-            if (config.getBoolean("prestiges")) {
-                getCommand("prestiges").setExecutor(new PrestigesCommand(this));
-            }
-        }
-        if (config.getBoolean("max-rankup.enabled")) {
-            getCommand("maxrankup").setExecutor(new MaxRankupCommand(this));
-        }
-
-        getCommand("rankup").setExecutor(new RankupCommand(this));
-        getCommand("rankup3").setExecutor(new InfoCommand(this, notifier));
+        loadCommands(notifier);
         getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         getServer().getPluginManager().registerEvents(
                 new JoinUpdateNotifier(notifier, () -> getConfig().getBoolean("notify-update"), "rankup.notify"), this);
@@ -197,6 +185,34 @@ public class RankupPlugin extends JavaPlugin {
         placeholders.register();
 
         loadHeadDatabase();
+    }
+
+
+    private void loadCommands(UpdateNotifier notifier) {
+        PaperCommandManager paperCommandManager = new PaperCommandManager(this);
+        paperCommandManager.enableUnstableAPI("help");
+        paperCommandManager.enableUnstableAPI("brigadier");
+        if (config.getBoolean("ranks")) {
+            if (config.getBoolean("ranks-gui")) {
+                RanksGuiListener listener = new RanksGuiListener();
+                paperCommandManager.registerCommand(new RanksGuiCommand(this,listener));
+                getServer().getPluginManager().registerEvents(listener, this);
+            } else {
+                paperCommandManager.registerCommand(new RanksCommand(this));
+            }
+        }
+        if (config.getBoolean("prestige")) {
+            paperCommandManager.registerCommand(new PrestigeCommand(this));
+            if (config.getBoolean("prestiges")) {
+                paperCommandManager.registerCommand(new PrestigesCommand(this));
+            }
+        }
+        if (config.getBoolean("max-rankup.enabled")) {
+            paperCommandManager.registerCommand(new MaxRankupCommand(this));
+        }
+
+        paperCommandManager.registerCommand(new RankupCommand(this));
+        paperCommandManager.registerCommand(new InfoCommand(this,notifier));
     }
 
     private void loadHeadDatabase() {

@@ -27,6 +27,9 @@ repositories {
         url 'https://raw.github.com/PyvesB/AdvancedAchievements/mvn-repo/'
     }
     maven {
+        url 'https://repo.aikar.co/content/groups/aikar/'
+    }
+    maven {
         url 'https://jitpack.io'
     }
 }
@@ -66,6 +69,7 @@ dependencies {
     }
     implementation 'com.electronwill.night-config:toml:3.6.4'
     implementation 'org.bstats:bstats-bukkit:2.2.1'
+    implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
 }
 
 artifacts {
@@ -77,6 +81,8 @@ shadowJar {
     minimize()
     relocate 'org.slf4j', 'sh.okx.rankup.export.org.slf4j'
     relocate 'org.bstats', 'sh.okx.rankup.metrics'
+    relocate 'co.aikar.commands', 'sh.okx.rankup.acf'
+    relocate 'co.aikar.locales', 'sh.okx.rankup.locales'
 }
 
 // automatically copy the version to plugin.yml
